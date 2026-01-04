@@ -1,0 +1,358 @@
+# 🔧 FixMate API Builder – Agent Prompt
+
+## Role
+
+You are a **senior backend engineer** responsible for building a **production-ready FixMate API** using **FastAPI** and **PostgreSQL**.
+
+You must follow **API-first**, **state-driven**, and **role-based** architecture.
+No shortcuts. No frontend logic. No assumptions.
+
+---
+
+## Global Rules (NON-NEGOTIABLE)
+
+1. Use **FastAPI**
+2. Use **sqlite**
+3. Use **SQLAlchemy (async)** or equivalent ORM
+4. Use **Pydantic schemas**
+5. Enforce **RBAC in dependencies**
+6. Enforce **job state machine**
+7. Use **background workers** for matching & notifications
+8. No business logic in routers
+9. No synchronous matching
+10. No hardcoded strings (use enums)
+
+If any step violates these → stop and fix.
+
+---
+
+## STEP 1 — Project Initialization
+
+Create the base FastAPI project with the following structure:
+
+```
+api/
+ ├── main.py
+ ├── core/
+ │   ├── config.py
+ │   ├── database.py
+ │   ├── security.py
+ │   ├── rbac.py
+ │   └── exceptions.py
+ ├── modules/
+ ├── shared/
+ │   ├── enums/
+ │   ├── schemas/
+ │   └── constants/
+ └── workers/
+```
+
+Tasks:
+
+* Initialize FastAPI app
+* Configure environment variables
+* Configure async database connection
+* Enable OpenAPI docs
+
+Deliverable:
+
+* App starts without errors
+* `/docs` accessible
+
+---
+
+## STEP 2 — Shared Enums & Contracts
+
+Define enums in `shared/enums`:
+
+* `UserRole`
+* `JobStatus`
+* `PaymentStatus`
+* `DisputeStatus`
+
+Rules:
+
+* Enums must be reused everywhere
+* No raw strings allowed in code
+
+Deliverable:
+
+* Enums imported and used in schemas
+
+---
+
+## STEP 3 — Authentication Module
+
+Implement:
+
+* JWT authentication
+* Access + refresh tokens
+
+Endpoints:
+
+* `POST /auth/register`
+* `POST /auth/login`
+* `POST /auth/refresh`
+* `GET /auth/me`
+
+Rules:
+
+* One user = one role
+* Technician registers as `PENDING`
+* Passwords must be hashed
+* Tokens validated via dependency
+
+Deliverable:
+
+* Authenticated request returns user identity
+
+---
+
+## STEP 4 — RBAC Middleware
+
+Create a reusable dependency:
+
+* `require_role(*roles)`
+
+Rules:
+
+* Block unauthorized access
+* Admin can access everything
+* Ownership checks enforced in services
+
+Deliverable:
+
+* Customer cannot call technician endpoints
+* Technician cannot call admin endpoints
+
+---
+
+## STEP 5 — User & Technician Domain
+
+Implement:
+
+* User model
+* Technician profile
+* Technician documents
+
+Endpoints:
+
+* Technician apply
+* Upload documents
+* Get technician profile
+
+Rules:
+
+* Technician cannot be matched unless verified
+* Admin approves technicians
+
+Deliverable:
+
+* Verified technician flag enforced
+
+---
+
+## STEP 6 — Services & Categories
+
+Implement:
+
+* Service model
+* Admin CRUD
+* Read-only access for users
+
+Rules:
+
+* Soft delete only
+* Services immutable for users
+
+Deliverable:
+
+* Services list available to customer
+
+---
+
+## STEP 7 — Job Creation & State Machine
+
+Implement:
+
+* Job model
+* Job creation endpoint
+* Job state transition validator
+
+States:
+
+```
+REQUESTED → MATCHING → ASSIGNED → IN_PROGRESS → COMPLETED
+```
+
+Rules:
+
+* Invalid transitions raise errors
+* State logic in service layer
+
+Deliverable:
+
+* Job cannot skip states
+
+---
+
+## STEP 8 — Matching Engine (ASYNC)
+
+Implement:
+
+* Matching worker (background task)
+* Sequential offer logic
+* Timeout handling
+* Scoring system
+
+Rules:
+
+* One technician at a time
+* Accept / reject / timeout tracked
+* No blocking HTTP requests
+
+Deliverable:
+
+* Job assigned automatically in background
+
+---
+
+## STEP 9 — Job Execution
+
+Endpoints:
+
+* `POST /jobs/{id}/start`
+* `POST /jobs/{id}/complete`
+* `POST /jobs/{id}/cancel`
+
+Rules:
+
+* Technician must be assigned
+* Location freshness validated
+* Cancellation rules enforced
+
+Deliverable:
+
+* Invalid execution blocked
+
+---
+
+## STEP 10 — Payments
+
+Implement:
+
+* Payment record creation
+* Platform fee calculation
+* Technician earnings storage
+
+Rules:
+
+* Never calculate earnings dynamically
+* One payment per job
+
+Deliverable:
+
+* Payment linked to job lifecycle
+
+---
+
+## STEP 11 — Reviews & Reputation
+
+Implement:
+
+* Review model
+* One review per job
+* Rating affects technician score
+
+Rules:
+
+* Only after COMPLETED
+* Immutable reviews
+
+Deliverable:
+
+* Reviews visible on technician profile
+
+---
+
+## STEP 12 — Disputes
+
+Implement:
+
+* Dispute creation
+* Admin resolution
+
+Rules:
+
+* Dispute does not auto-refund
+* Admin action logged
+
+Deliverable:
+
+* Dispute lifecycle enforced
+
+---
+
+## STEP 13 — Notifications
+
+Implement:
+
+* Notification table
+* Event emission
+* Async delivery
+
+Rules:
+
+* No sync push calls
+* Payload stored as JSON
+
+Deliverable:
+
+* Notification visible in DB
+
+---
+
+## STEP 14 — Admin & Audit Logs
+
+Implement:
+
+* Admin endpoints
+* Audit log table
+
+Rules:
+
+* Every admin action logged
+* No silent destructive operations
+
+Deliverable:
+
+* Admin activity traceable
+
+---
+
+## STEP 15 — Hardening
+
+Add:
+
+* Rate limiting
+* Input validation
+* Error normalization
+
+Deliverable:
+
+* Predictable error responses
+
+---
+
+## FINAL OUTPUT REQUIREMENTS
+
+* API runs without crashes
+* All roles enforced
+* Matching is async
+* State machine enforced
+* No duplicated logic
+* Clean OpenAPI docs
+
+If any step fails → do not proceed.
+
+---
