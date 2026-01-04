@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from api.modules.jobs import models, schemas
-from api.shared.enums import JobStatus, JobOfferStatus
+from modules.jobs import models, schemas
+from shared.enums import JobStatus, JobOfferStatus
 from fastapi import HTTPException
 from datetime import datetime
 
@@ -115,7 +115,7 @@ async def complete_job(db: AsyncSession, job_id: str, technician_id: str):
         
     job.status = JobStatus.COMPLETED
     # Trigger payment calculation
-    from api.modules.payments import service as payment_service
+    from modules.payments import service as payment_service
     await payment_service.create_payment_for_job(db, job)
     
     await db.commit()

@@ -1,8 +1,8 @@
 from sqlalchemy import Column, String, ForeignKey, Integer, Text, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from api.core.database import Base
-from api.modules.auth.models import generate_uuid
+from core.database import Base
+from modules.auth.models import generate_uuid
 
 class Review(Base):
     __tablename__ = "reviews"
@@ -17,5 +17,5 @@ class Review(Base):
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
-    job = relationship("api.modules.jobs.models.Job", backref="review")
-    technician = relationship("api.modules.users.models.Technician")
+    job = relationship("modules.jobs.models.Job", backref="review")
+    technician = relationship("modules.users.models.Technician")

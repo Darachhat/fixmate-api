@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from typing import List
-from api.core.database import get_db
-from api.modules.notifications import models, schemas
-from api.modules.auth.models import User
-from api.modules.auth.dependencies import get_current_user
+from core.database import get_db
+from modules.notifications import models, schemas
+from modules.auth.models import User
+from modules.auth.dependencies import get_current_user
 
 router = APIRouter(prefix="/notifications", tags=["Notifications"])
 

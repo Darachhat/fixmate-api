@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     API_PREFIX: str = "/api/v1"
     
     # Database
-    DATABASE_URL: str = "sqlite+aiosqlite:///./fixmate.db"
+    DATABASE_URL: str = "sqlite+aiosqlite:///fixmate.db"
     
     # Security
     SECRET_KEY: str = "CHANGE_THIS_TO_A_SECURE_SECRET_KEY"

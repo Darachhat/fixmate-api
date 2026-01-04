@@ -1,17 +1,17 @@
 from fastapi import FastAPI
-from api.core.config import settings
-from api.modules.auth.router import router as auth_router
-from api.modules.users.router import router as users_router
-from api.modules.services.router import router as services_router
-from api.modules.jobs.router import router as jobs_router
-from api.modules.reviews.router import router as reviews_router
-from api.modules.disputes.router import router as disputes_router
-from api.modules.notifications.router import router as notifications_router
-from api.modules.admin.router import router as admin_router
-from api.core.database import engine, Base
+from core.config import settings
+from modules.auth.router import router as auth_router
+from modules.users.router import router as users_router
+from modules.services.router import router as services_router
+from modules.jobs.router import router as jobs_router
+from modules.reviews.router import router as reviews_router
+from modules.disputes.router import router as disputes_router
+from modules.notifications.router import router as notifications_router
+from modules.admin.router import router as admin_router
+from core.database import engine, Base
 from contextlib import asynccontextmanager
 
-from api.workers.matching import run_matching_worker
+from workers.matching import run_matching_worker
 import asyncio
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -46,18 +46,23 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-from api.core.log import logger
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # In production, replace with specific origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+from core.log import logger
 from fastapi import Request
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-@app.middleware("http")
-async def log_requests(request: Request, call_next):
-    logger.info(f"Request: {request.method} {request.url.path}")
-    response = await call_next(request)
-    logger.info(f"Response: {response.status_code}")
-    return response
+
 
 app.include_router(auth_router, prefix=settings.API_PREFIX)
 app.include_router(users_router, prefix=settings.API_PREFIX)

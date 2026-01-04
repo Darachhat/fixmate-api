@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from api.modules.users import models, schemas
+from modules.users import models, schemas
 from fastapi import HTTPException, status
 
 async def get_technician_by_user_id(db: AsyncSession, user_id: str):

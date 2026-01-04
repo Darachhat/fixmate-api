@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from api.modules.services import models, schemas
+from modules.services import models, schemas
 from fastapi import HTTPException
 
 async def get_services(db: AsyncSession, active_only: bool = True):

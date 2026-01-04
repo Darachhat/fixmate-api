@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.core.database import get_db
-from api.modules.users import models, schemas, service
-from api.modules.auth.models import User
-from api.core.rbac import require_role
-from api.shared.enums import UserRole
-from api.modules.auth.dependencies import get_current_user
-from api.core.log import logger
+from core.database import get_db
+from modules.users import models, schemas, service
+from modules.auth.models import User
+from core.rbac import require_role
+from shared.enums import UserRole
+from modules.auth.dependencies import get_current_user
+from core.log import logger
 import shutil
 import os
 

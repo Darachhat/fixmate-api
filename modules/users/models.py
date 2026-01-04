@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Boolean, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
-from api.core.database import Base
-from api.modules.auth.models import generate_uuid
+from core.database import Base
+from modules.auth.models import generate_uuid
 
 # Technician Profile
 class Technician(Base):
@@ -18,7 +18,7 @@ class Technician(Base):
     average_rating = Column(Float, default=0.0)
     total_reviews = Column(Integer, default=0)
 
-    user = relationship("api.modules.auth.models.User", backref="technician_profile")
+    user = relationship("modules.auth.models.User", backref="technician_profile")
     documents = relationship("TechnicianDocument", back_populates="technician")
 
 class TechnicianDocument(Base):

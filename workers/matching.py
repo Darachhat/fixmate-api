@@ -1,10 +1,10 @@
 import asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, and_, func
-from api.core.database import SessionLocal
-from api.modules.jobs import models as job_models
-from api.modules.users import models as user_models
-from api.shared.enums import JobStatus, JobOfferStatus
+from core.database import SessionLocal
+from modules.jobs import models as job_models
+from modules.users import models as user_models
+from shared.enums import JobStatus, JobOfferStatus
 from datetime import datetime, timedelta
 
 async def run_matching_worker():
@@ -95,3 +95,6 @@ async def process_matching(db: AsyncSession):
         else:
             # No tech found. Log or notify?
             pass
+
+    # Ensure clean transaction close
+    await db.commit()

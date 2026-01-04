@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from api.modules.disputes import models, schemas
-from api.modules.jobs import models as job_models
-from api.shared.enums import DisputeStatus
+from modules.disputes import models, schemas
+from modules.jobs import models as job_models
+from shared.enums import DisputeStatus
 from fastapi import HTTPException
 from datetime import datetime
 

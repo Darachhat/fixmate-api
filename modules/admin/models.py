@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, DateTime, Text
 from sqlalchemy.sql import func
-from api.core.database import Base
-from api.modules.auth.models import generate_uuid
+from core.database import Base
+from modules.auth.models import generate_uuid
 
 class AuditLog(Base):
     __tablename__ = "audit_logs"

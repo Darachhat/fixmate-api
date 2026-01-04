@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
-from api.shared.enums import JobStatus
+from shared.enums import JobStatus
 
 class JobBase(BaseModel):
     service_id: str

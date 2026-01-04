@@ -1,11 +1,11 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
-from api.core.config import settings
+from core.config import settings
 
 engine = create_async_engine(
     settings.DATABASE_URL,
     connect_args={"check_same_thread": False}, # Needed for SQLite
-    echo=True, # Enable SQL logging for development
+    echo=False, # Disable SQL logging for development
 )
 
 SessionLocal = async_sessionmaker(

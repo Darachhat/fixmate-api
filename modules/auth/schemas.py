@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
-from api.shared.enums import UserRole
+from shared.enums import UserRole
 
 class UserBase(BaseModel):
     email: EmailStr

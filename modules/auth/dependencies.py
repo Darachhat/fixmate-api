@@ -2,10 +2,10 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.core.config import settings
-from api.core.database import get_db
-from api.modules.auth import models, schemas
-from api.core.exceptions import CredentialsException, NotFoundException, PermissionDeniedException # PermissionDeniedException for rbac later
+from core.config import settings
+from core.database import get_db
+from modules.auth import models, schemas
+from core.exceptions import CredentialsException, NotFoundException, PermissionDeniedException # PermissionDeniedException for rbac later
 from sqlalchemy import select
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_PREFIX}/auth/login")

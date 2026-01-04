@@ -1,9 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from api.modules.reviews import models, schemas
-from api.modules.jobs import models as job_models
-from api.modules.users import models as user_models
-from api.shared.enums import JobStatus
+from modules.reviews import models, schemas
+from modules.jobs import models as job_models
+from modules.users import models as user_models
+from shared.enums import JobStatus
 from fastapi import HTTPException
 
 async def create_review(db: AsyncSession, user_id: str, review_in: schemas.ReviewCreate):

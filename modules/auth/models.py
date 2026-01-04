@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Boolean, Integer, Enum as SQLEnum, DateTime
 from sqlalchemy.sql import func
-from api.core.database import Base
-from api.shared.enums import UserRole
+from core.database import Base
+from shared.enums import UserRole
 import uuid
 
 def generate_uuid():

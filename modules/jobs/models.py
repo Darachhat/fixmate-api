@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, ForeignKey, Enum as SQLEnum, DateTime, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from api.core.database import Base
-from api.modules.auth.models import generate_uuid
-from api.shared.enums import JobStatus, JobOfferStatus
+from core.database import Base
+from modules.auth.models import generate_uuid
+from shared.enums import JobStatus, JobOfferStatus
 
 class Job(Base):
     __tablename__ = "jobs"
@@ -24,9 +24,9 @@ class Job(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    customer = relationship("api.modules.auth.models.User", foreign_keys=[customer_id], backref="requested_jobs")
-    technician = relationship("api.modules.users.models.Technician", backref="assigned_jobs")
-    service = relationship("api.modules.services.models.Service")
+    customer = relationship("modules.auth.models.User", foreign_keys=[customer_id], backref="requested_jobs")
+    technician = relationship("modules.users.models.Technician", backref="assigned_jobs")
+    service = relationship("modules.services.models.Service")
     offers = relationship("JobOffer", back_populates="job")
 
 class JobOffer(Base):
@@ -41,4 +41,4 @@ class JobOffer(Base):
     expires_at = Column(DateTime(timezone=True), nullable=False)
 
     job = relationship("Job", back_populates="offers")
-    technician = relationship("api.modules.users.models.Technician")
+    technician = relationship("modules.users.models.Technician")

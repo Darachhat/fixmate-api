@@ -1,8 +1,8 @@
 from fastapi import Depends
-from api.modules.auth.dependencies import get_current_user
-from api.modules.auth.models import User
-from api.shared.enums import UserRole
-from api.core.exceptions import PermissionDeniedException
+from modules.auth.dependencies import get_current_user
+from modules.auth.models import User
+from shared.enums import UserRole
+from core.exceptions import PermissionDeniedException
 
 def require_role(*required_roles: UserRole):
     """

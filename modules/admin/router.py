@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from api.core.database import get_db
-from api.modules.admin import models, schemas
-from api.modules.auth.models import User
-from api.core.rbac import require_role
-from api.shared.enums import UserRole
+from core.database import get_db
+from modules.admin import models, schemas
+from modules.auth.models import User
+from core.rbac import require_role
+from shared.enums import UserRole
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 

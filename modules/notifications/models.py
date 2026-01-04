@@ -1,8 +1,8 @@
 from sqlalchemy import Column, String, ForeignKey, Boolean, DateTime, Text, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from api.core.database import Base
-from api.modules.auth.models import generate_uuid
+from core.database import Base
+from modules.auth.models import generate_uuid
 
 class Notification(Base):
     __tablename__ = "notifications"
@@ -16,4 +16,4 @@ class Notification(Base):
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
-    user = relationship("api.modules.auth.models.User", backref="notifications")
+    user = relationship("modules.auth.models.User", backref="notifications")

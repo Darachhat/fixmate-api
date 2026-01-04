@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.modules.payments import models
-from api.modules.jobs import models as job_models
-from api.shared.enums import PaymentStatus
+from modules.payments import models
+from modules.jobs import models as job_models
+from shared.enums import PaymentStatus
 
 async def create_payment_for_job(db: AsyncSession, job: job_models.Job):
     # Calculate fees

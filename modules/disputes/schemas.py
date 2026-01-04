@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
-from api.shared.enums import DisputeStatus
+from shared.enums import DisputeStatus
 
 class DisputeCreate(BaseModel):
     job_id: str

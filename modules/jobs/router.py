@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.core.database import get_db
-from api.modules.jobs import models, schemas, service
-from api.modules.auth.models import User
-from api.core.rbac import require_role
-from api.shared.enums import UserRole
-from api.core.log import logger
+from core.database import get_db
+from modules.jobs import models, schemas, service
+from modules.auth.models import User
+from core.rbac import require_role
+from shared.enums import UserRole
+from core.log import logger
 
 router = APIRouter(prefix="/jobs", tags=["Jobs"])
 
@@ -40,8 +40,8 @@ async def accept_job(
     # Logic to find offer... (simplified from previous step)
     tech = current_user.technician_profile[0]
     from sqlalchemy import select
-    from api.modules.jobs.models import JobOffer
-    from api.shared.enums import JobOfferStatus
+    from modules.jobs.models import JobOffer
+    from shared.enums import JobOfferStatus
 
     result = await db.execute(select(JobOffer).where(
         JobOffer.job_id == job_id,

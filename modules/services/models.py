@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Boolean, Float
-from api.core.database import Base
-from api.modules.auth.models import generate_uuid
+from core.database import Base
+from modules.auth.models import generate_uuid
 
 class Service(Base):
     __tablename__ = "services"

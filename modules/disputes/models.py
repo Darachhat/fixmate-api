@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, ForeignKey, Enum as SQLEnum, DateTime, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from api.core.database import Base
-from api.modules.auth.models import generate_uuid
-from api.shared.enums import DisputeStatus
+from core.database import Base
+from modules.auth.models import generate_uuid
+from shared.enums import DisputeStatus
 
 class Dispute(Base):
     __tablename__ = "disputes"
@@ -19,5 +19,5 @@ class Dispute(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     resolved_at = Column(DateTime(timezone=True), nullable=True)
     
-    job = relationship("api.modules.jobs.models.Job", backref="disputes")
-    created_by = relationship("api.modules.auth.models.User")
+    job = relationship("modules.jobs.models.Job", backref="disputes")
+    created_by = relationship("modules.auth.models.User")
